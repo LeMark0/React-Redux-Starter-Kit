@@ -1,6 +1,6 @@
 import React, { Component }  from 'react';
 import {connect} from 'react-redux';
-import { setTest } from 'redux/actions/AppActions';
+import { setTest, getLatestRates } from 'redux/actions/AppActions';
 
 // Styles
 import './styles.scss';
@@ -39,6 +39,11 @@ class App extends Component {
     handleClick(value){
         //console.log("this.props: ", this.props);
         this.props.dispatch(setTest(value));
+        this.loadLatestRates();
+    };
+
+    loadLatestRates(){
+        this.props.dispatch(getLatestRates());
     };
 };
 
