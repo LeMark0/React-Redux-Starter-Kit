@@ -1,12 +1,14 @@
 import forge from 'mappersmith';
-import appConfig from 'config/app';
+import config from './config';
 
-const preparePath = (path) => `${path}?app_id=${appConfig.appId}`;
+const apiAlias = (config.useStubs)
+    ? 'localhost'
+    : 'openexchangerates';
+
+const preparePath = (resource) => `${resource}?app_id=${config.api[apiAlias].appId}`;
 
 const client = forge({
-    host: (appConfig.useStubs)
-        ? "http://localhost:3000/"
-        : "https://openexchangerates.org/api/",
+    host: config.api[apiAlias].host,
     resources: {
         currency: {
             latest: { path: preparePath('latest.json') },

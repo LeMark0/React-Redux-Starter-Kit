@@ -30,9 +30,12 @@ module.exports = {
             {
                 test: /\.(jsx|js)?$/,
                 exclude: /node_modules/,
-                use: [
-                    'babel-loader',
-                ]
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['es2017', 'stage-0', 'react'],
+                    }
+                }
             },
             {
                 test: /\.(ico|jpg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)$/,

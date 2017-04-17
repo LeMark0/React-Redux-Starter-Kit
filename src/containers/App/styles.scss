@@ -1,4 +1,12 @@
 .container-app {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #2e2e2e;
+
+  button {
+    cursor: pointer;
+    border: 1px solid #f5f5f5;
+    width: 200px;
+    height: 30px;
+    background: #fff;
+  }
 }

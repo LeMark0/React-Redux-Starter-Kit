@@ -9,23 +9,17 @@ export const getLatestRatesSuccess = createAction(actionTypes.App.async.getLates
 export const getLatestRatesFail = createAction(actionTypes.App.async.getLatestRatesFail);
 
 
-export const getLatestRates = (state, action) => {
-    return (dispatch) => {
-        dispatch(getLatestRatesRequest());
+export const getLatestRates = () => (dispatch) => {
+    dispatch(getLatestRatesRequest());
 
-        api.currency
-            .latest()
-            .then( response => {
-                dispatch(getLatestRatesSuccess());
+    api.currency.latest()
+        .then(response => {
+            dispatch(getLatestRatesSuccess(JSON.parse(response.responseData)));
 
-                console.log('Response: ', response);
-            })
-            .catch( error => {
-                dispatch(getLatestRatesFail());
+        })
+        .catch(error => {
+            dispatch(getLatestRatesFail(error));
 
-                console.log('Error: ', error);
-            });
-
-    }
+        });
 };
 
