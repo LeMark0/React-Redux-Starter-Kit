@@ -7,7 +7,7 @@ export default {
         },
         openexchangerates: {
             host: "https://openexchangerates.org/api/",
-            appId: "6eef3f05cd1240038ac66da30384cb5c"
+            appId: ""
         }
     }
 }
