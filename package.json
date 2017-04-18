@@ -6,14 +6,14 @@
   "dependencies": {
     "lodash": "^4.17.4",
     "mappersmith": "^2.3.0",
+    "prop-types": "^15.5.8",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.3",
     "redux": "^3.6.0",
     "redux-actions": "^2.0.1",
     "redux-thunk": "^2.2.0",
-    "seamless-immutable": "^7.1.2",
-    "webpack": "^2.3.2"
+    "seamless-immutable": "^7.1.2"
   },
   "devDependencies": {
     "babel-cli": "^6.24.0",
@@ -33,12 +33,15 @@
     "style-loader": "^0.16.1",
     "url-loader": "^0.5.8",
     "webpack": "^2.3.3",
+    "webpack-bundle-analyzer": "^2.4.0",
     "webpack-dev-server": "^2.4.2"
   },
   "scripts": {
     "start": "webpack-dev-server --hot --inline",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
+    "buildtest": "./node_modules/webpack/bin/webpack.js --progress --profile --colors",
+    "build": "./node_modules/webpack/bin/webpack.js -p --progress --profile --colors",
+    "buildprod": "./node_modules/webpack/bin/webpack.js --env=production --progress --profile --colors"
   },
   "keywords": [],
   "author": "",

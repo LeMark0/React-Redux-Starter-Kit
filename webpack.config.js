@@ -1,5 +1,6 @@
+const webpack = require('webpack');
 const pathList = require("./pathList");
-var path = require('path');
+const path = require('path');
 
 module.exports = {
     entry: `${pathList.src}/index.jsx`,
@@ -20,7 +21,7 @@ module.exports = {
 
         }
     },
-    devtool: "cheap-eval-source-map",
+    devtool: "source-map",
     devServer: {
         contentBase: pathList.src,
         hot: true
@@ -66,4 +67,32 @@ module.exports = {
             }
         ]
     },
+    plugins:[
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify('production')
+        }),
+        new webpack.LoaderOptionsPlugin({
+            minimize: true,
+            debug: false
+        })
+    ]
+    // plugins: [
+    //     new webpack.optimize.UglifyJsPlugin({
+    //         compress: {
+    //             warnings: false,
+    //             screw_ie8: true,
+    //             conditionals: true,
+    //             unused: true,
+    //             comparisons: true,
+    //             sequences: true,
+    //             dead_code: true,
+    //             evaluate: true,
+    //             if_return: true,
+    //             join_vars: true,
+    //         },
+    //         output: {
+    //             comments: false,
+    //         },
+    //     })
+    // ]
 };

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import Loader from 'components/Loader';
 
 import './styles.scss';
@@ -6,7 +7,7 @@ import './styles.scss';
 export default class ApiResponse extends Component {
 
     static propTypes = {
-        asyncState: React.PropTypes.object
+        asyncState: PropTypes.object
     }
 
     render() {

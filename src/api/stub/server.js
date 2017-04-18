@@ -10,7 +10,7 @@ const port = 3000;
 connect()
     .use(serveStatic(__dirname, {
         setHeaders: function(res){
-            res.setHeader("Access-Control-Allow-Origin", "http://localhost:8080");
+            res.setHeader("Access-Control-Allow-Origin", "*");
         }
     }))
     .listen(port, function(){
