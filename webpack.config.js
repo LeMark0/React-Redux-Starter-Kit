@@ -2,6 +2,42 @@ const webpack = require('webpack');
 const pathList = require("./pathList");
 const path = require('path');
 
+
+const plugins = [
+    new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify('production')
+    }),
+];
+
+
+if (process.env.NODE_ENV === 'production') {
+    plugins.push(
+        new webpack.LoaderOptionsPlugin({
+            minimize: true,
+            debug: false
+        })
+    ),
+    plugins.push(
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false,
+                screw_ie8: true,
+                conditionals: true,
+                unused: true,
+                comparisons: true,
+                sequences: true,
+                dead_code: true,
+                evaluate: true,
+                if_return: true,
+                join_vars: true,
+            },
+            output: {
+                comments: false,
+            },
+        })
+    );
+}
+
 module.exports = {
     entry: `${pathList.src}/index.jsx`,
     output: {
@@ -31,12 +67,10 @@ module.exports = {
             {
                 test: /\.(jsx|js)?$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['es2017', 'stage-0', 'react'],
-                    }
-                }
+                use: [
+                    'babel-loader'
+                ]
+
             },
             {
                 test: /\.(ico|jpg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)$/,
@@ -67,32 +101,5 @@ module.exports = {
             }
         ]
     },
-    plugins:[
-        new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify('production')
-        }),
-        new webpack.LoaderOptionsPlugin({
-            minimize: true,
-            debug: false
-        })
-    ]
-    // plugins: [
-    //     new webpack.optimize.UglifyJsPlugin({
-    //         compress: {
-    //             warnings: false,
-    //             screw_ie8: true,
-    //             conditionals: true,
-    //             unused: true,
-    //             comparisons: true,
-    //             sequences: true,
-    //             dead_code: true,
-    //             evaluate: true,
-    //             if_return: true,
-    //             join_vars: true,
-    //         },
-    //         output: {
-    //             comments: false,
-    //         },
-    //     })
-    // ]
+    plugins: plugins
 };
