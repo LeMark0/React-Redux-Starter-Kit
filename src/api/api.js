@@ -1,24 +1,24 @@
 import forge from 'mappersmith';
 import config from './config';
-import _ from 'lodash';
+import get from 'lodash/get';
 
 const apiAlias = (config.useStubs)
-    ? 'localhost'
-    : 'openexchangerates';
+  ? 'localhost'
+  : 'openexchangerates';
 
 const defaultParams = {
-    app_id: config.api[apiAlias].appId
+  app_id: config.api[apiAlias].appId
 };
 
 const client = forge({
-    host: config.api[apiAlias].host,
-    resources: {
-        currency: {
-            latest: { path: 'latest.json' },
-        },
-    }
+  host: config.api[apiAlias].host,
+  resources: {
+    currency: {
+      latest: {path: 'latest.json'},
+    },
+  }
 });
 
-export default function(resource, params) {
-    return _.get(client, resource)({...defaultParams, params});
+export default function (resource, params) {
+  return get(client, resource)({...defaultParams, params});
 }

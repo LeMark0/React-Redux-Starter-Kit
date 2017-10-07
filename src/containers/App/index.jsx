@@ -1,46 +1,47 @@
-import React, { Component }  from 'react';
+import React, {Component}  from 'react';
 import {connect} from 'react-redux';
-import { setTest } from 'redux/actions/AppActions';
-import { getLatestRates } from 'redux/actions/CurrencyActions';
+import {setTest} from 'redux/actions/AppActions';
+import {getLatestRates} from 'redux/actions/CurrencyActions';
 import ApiResponse from 'components/ApiResponse';
 
 // Styles
 import './styles.scss';
 
 const mapStateToProps = function (store) {
-    return {
-        testState: store.appState.test,
-        latestRatesState: store.currencyState.async.getLatestRates
-    };
+  return {
+    testState: store.appState.test,
+    latestRatesState: store.currencyState.async.getLatestRates
+  };
 };
 
 class App extends Component {
 
-    render() {
+  render() {
 
-        return (
-            <div className="container-app">
-                <h2>React-Redux-Starter-Kit</h2>
+    return (
+      <div className="container-app">
+        <h2>React-Redux-Starter-Kit</h2>
 
-                <button onClick={() => this.handleClick(!this.props.testState)} >
-                    Request API: {this.props.latestRatesState.status}
-                </button>
+        <button onClick={() => this.handleClick(!this.props.testState)}>
+          Request API: {this.props.latestRatesState.status}
+        </button>
 
-                <ApiResponse asyncState={this.props.latestRatesState} />
-            </div>
-        )
-    };
+        <ApiResponse asyncState={this.props.latestRatesState}/>
+      </div>
+    )
+  };
 
-    handleClick(value){
-        // set some state in the redux store
-        this.props.dispatch(setTest(value));
-        // make an API request
-        this.loadLatestRates();
-    };
+  handleClick(value) {
+    // set some state in the redux store
+    this.props.dispatch(setTest(value));
+    // make an API request
+    this.loadLatestRates();
+  };
 
-    loadLatestRates(){
-        this.props.dispatch(getLatestRates());
-    };
-};
+  loadLatestRates() {
+    this.props.dispatch(getLatestRates());
+  };
+}
+;
 
 export default connect(mapStateToProps)(App);

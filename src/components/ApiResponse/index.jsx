@@ -6,38 +6,38 @@ import './styles.scss';
 
 export default class ApiResponse extends Component {
 
-    static propTypes = {
-        asyncState: PropTypes.object
-    }
+  static propTypes = {
+    asyncState: PropTypes.object
+  }
 
-    render() {
-        const { asyncState } = this.props;
+  render() {
+    const {asyncState} = this.props;
 
-        return (
-            <div className="component-api-response">
+    return (
+      <div className="component-api-response">
 
-                {
-                    (asyncState.needShowLoader) && <Loader />
-                }
+        {
+          (asyncState.needShowLoader) && <Loader />
+        }
 
-                <div className="response">
+        <div className="response">
 
-                {
-                    (asyncState.needShowData) &&
-                    ((this.props.children)
-                            ? this.props.children
-                            : <div className="data-text">{ JSON.stringify(asyncState.data) }</div>)
+          {
+            (asyncState.needShowData) &&
+            ((this.props.children)
+              ? this.props.children
+              : <div className="data-text">{ JSON.stringify(asyncState.data) }</div>)
 
-                }
+          }
 
-                {
-                    (asyncState.needShowError) && <div className="error">{asyncState.error.responseData}</div>
+          {
+            (asyncState.needShowError) && <div className="error">{asyncState.error.responseData}</div>
 
-                }
+          }
 
-                </div>
+        </div>
 
-            </div>
-        )
-    }
+      </div>
+    )
+  }
 };

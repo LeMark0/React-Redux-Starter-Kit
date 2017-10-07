@@ -7,14 +7,25 @@
     "react-hot-loader/babel",
     "react-require",
     "transform-class-properties",
-    ["transform-object-rest-spread", { "useBuiltIns": true }],
-    ["transform-regenerator", {
-      "async": false
-    }],
-    ["transform-runtime", {
-      "helpers": true,
-      "polyfill": true,
-      "regenerator": true
-    }]
+    [
+      "transform-object-rest-spread",
+      {
+        "useBuiltIns": true
+      }
+    ],
+    [
+      "transform-regenerator",
+      {
+        "async": false
+      }
+    ],
+    [
+      "transform-runtime",
+      {
+        "helpers": true,
+        "polyfill": true,
+        "regenerator": true
+      }
+    ]
   ]
 }

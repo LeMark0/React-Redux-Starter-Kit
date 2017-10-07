@@ -8,11 +8,11 @@ const serveStatic = require('serve-static');
 const port = 3000;
 
 connect()
-    .use(serveStatic(__dirname, {
-        setHeaders: function(res){
-            res.setHeader("Access-Control-Allow-Origin", "*");
-        }
-    }))
-    .listen(port, function(){
+  .use(serveStatic(__dirname, {
+    setHeaders: function (res) {
+      res.setHeader("Access-Control-Allow-Origin", "*");
+    }
+  }))
+  .listen(port, function () {
     console.log(`Server running on ${port}...`);
-});
+  });
