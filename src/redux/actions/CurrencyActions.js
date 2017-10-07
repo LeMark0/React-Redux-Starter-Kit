@@ -7,10 +7,10 @@ export const getLatestRatesSuccess = createAction(actionTypes.Currency.async.get
 export const getLatestRatesFail = createAction(actionTypes.Currency.async.getLatestRatesFail);
 
 
-export const getLatestRates = () => (dispatch) => {
+export const getLatestRates = (params) => (dispatch) => {
     dispatch(getLatestRatesRequest());
 
-    api.currency.latest()
+    api('currency.latest', params)
         .then(response => {
             dispatch(getLatestRatesSuccess(JSON.parse(response.responseData)));
 
