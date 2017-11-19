@@ -1,105 +1,52 @@
+const constants = require('./webpack.constants');
+const eslintPlugin = require('./webpack.eslint');
 const webpack = require('webpack');
-const pathList = require("./pathList");
-const path = require('path');
+const loaders = require('./webpack.loaders');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const { pathList, path } = constants;
 
 const plugins = [
   new webpack.DefinePlugin({
-    'process.env.NODE_ENV': JSON.stringify('production')
+    'process.env.NODE_ENV': JSON.stringify(constants.BUILD_ENV),
+  }),
+  new HtmlWebpackPlugin({
+    template: './static/index.html',
   }),
 ];
 
-
-if (process.env.NODE_ENV === 'production') {
-  plugins.push(
-    new webpack.LoaderOptionsPlugin({
-      minimize: true,
-      debug: false
-    })
-  ),
-    plugins.push(
-      new webpack.optimize.UglifyJsPlugin({
-        compress: {
-          warnings: false,
-          screw_ie8: true,
-          conditionals: true,
-          unused: true,
-          comparisons: true,
-          sequences: true,
-          dead_code: true,
-          evaluate: true,
-          if_return: true,
-          join_vars: true,
-        },
-        output: {
-          comments: false,
-        },
-      })
-    );
+if (eslintPlugin) {
+  plugins.push(eslintPlugin);
 }
 
 module.exports = {
+  plugins,
   entry: `${pathList.src}/index.jsx`,
   output: {
+    publicPath: '/',
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, '/dist'),
+    sourceMapFilename: '[name].js,map',
   },
   resolve: {
     extensions: ['.js', '.jsx'],
     modules: [
       pathList.src,
-      'node_modules'
+      'node_modules',
     ],
     alias: {
-      "/": pathList.src,
       components: path.resolve(__dirname, `${pathList.src}/components/`),
       containers: path.resolve(__dirname, `${pathList.src}/containers/`),
-
-    }
+    },
   },
-  devtool: "source-map",
+  devtool: process.env.WEBPACK_DEVTOOL || 'cheap-module-source-map',
   devServer: {
     contentBase: pathList.src,
-    hot: true
+    hot: true,
+    port: constants.port,
+    historyApiFallback: true,
   },
   module: {
-    rules: [
-      {
-        test: /\.(jsx|js)?$/,
-        exclude: /node_modules/,
-        use: [
-          'babel-loader'
-        ]
-
-      },
-      {
-        test: /\.(ico|jpg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 10000,
-              name: 'static/[name].[hash:8].[ext]'
-            }
-          }
-        ]
-      }, {
-        test: /\.json$/,
-        use: [
-          'json-loader'
-        ]
-      },
-      {
-        test: /\.scss$/,
-        use: [{
-          loader: "style-loader" // creates style nodes from JS strings
-        }, {
-          loader: "css-loader" // translates CSS into CommonJS
-        }, {
-          loader: "sass-loader" // compiles Sass to CSS
-        }]
-      }
-    ]
+    loaders,
   },
-  plugins: plugins
 };

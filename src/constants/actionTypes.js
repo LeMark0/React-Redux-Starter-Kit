@@ -1,8 +1,8 @@
 export default {
-  App: {
+  app: {
     setTest: "APP/SET_TEST",
   },
-  Currency: {
+  currency: {
     async: {
       getLatestRatesRequest: "CURRENCY/ASYNC/GET_LATEST_RATES_REQUEST",
       getLatestRatesSuccess: "CURRENCY/ASYNC/GET_LATEST_RATES_SUCCESS",

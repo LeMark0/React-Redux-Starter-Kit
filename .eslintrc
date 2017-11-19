@@ -1,0 +1,71 @@
+// Use this file as a starting point for your project"s .eslintrc.
+// Copy this file, and add rule overrides as needed.
+{
+  "extends": [
+    "airbnb"
+  ],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    "semi": 2,
+    "linebreak-style": 0,
+    "react/sort-comp": [
+      1,
+      {
+        "order": [
+          "type-annotations",
+          "static-methods",
+          "lifecycle",
+          "render",
+          "/^render.+$/",
+          "/^on.+$/",
+          "everything-else"
+        ]
+      }
+    ],
+    "react/no-array-index-key": 0,
+    "no-console": 0,
+    "arrow-parens": [
+      "error",
+      "always"
+    ],
+    "no-underscore-dangle": 0,
+    "react/forbid-prop-types": [
+      1,
+      {
+        "forbid": [
+          "any",
+          "array"
+        ]
+      }
+    ]
+  },
+  "globals": {
+    "window": true,
+    "document": true,
+    "BUILD_ENV": true
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "mocha": true,
+    "node": true
+  },
+  "plugins": [
+    "react",
+    "import",
+    "jsx-a11y"
+  ],
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "webpack.config.js"
+      }
+    }
+  }
+}

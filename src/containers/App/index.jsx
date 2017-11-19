@@ -1,7 +1,7 @@
-import React, {Component}  from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {setTest} from 'redux/actions/AppActions';
-import {getLatestRates} from 'redux/actions/CurrencyActions';
+import {setTest} from 'actions/app';
+import {getLatestRates} from 'actions/currency';
 import ApiResponse from 'components/ApiResponse';
 
 // Styles
@@ -9,8 +9,8 @@ import './styles.scss';
 
 const mapStateToProps = function (store) {
   return {
-    testState: store.appState.test,
-    latestRatesState: store.currencyState.async.getLatestRates
+    testState: store.app.test,
+    latestRatesState: store.currency.async.getLatestRates,
   };
 };
 
