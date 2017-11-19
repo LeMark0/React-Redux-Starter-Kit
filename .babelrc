@@ -5,7 +5,6 @@
   ],
   "plugins": [
     "react-hot-loader/babel",
-    "react-require",
     "transform-class-properties",
     [
       "transform-object-rest-spread",
@@ -14,17 +13,10 @@
       }
     ],
     [
-      "transform-regenerator",
-      {
-        "async": false
-      }
-    ],
-    [
       "transform-runtime",
       {
         "helpers": true,
-        "polyfill": true,
-        "regenerator": true
+        "polyfill": true
       }
     ]
   ]
