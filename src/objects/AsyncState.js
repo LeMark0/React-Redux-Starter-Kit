@@ -1,7 +1,7 @@
 import immutable from 'seamless-immutable';
 import statusList from 'constants/statusList';
 
-export const prepareStateRequest = function (asyncState) {
+export function prepareStateRequest(asyncState) {
   return immutable.merge(asyncState, {
     status: statusList.PENDING,
     needShowLoader: true,
@@ -9,29 +9,30 @@ export const prepareStateRequest = function (asyncState) {
     needShowData: false,
     hasRequested: true,
   });
-};
-export const prepareStateSuccess = function (asyncState, data) {
+}
+
+export function prepareStateSuccess(asyncState, data) {
   return immutable.merge(asyncState, {
     status: statusList.SUCCESS,
-    data: data,
+    data,
     error: null,
     needShowLoader: false,
     needShowError: false,
     needShowData: true,
     hasRequested: true,
   });
-};
-export const prepareStateFail = function (asyncState, error) {
+}
+
+export function prepareStateFail(asyncState, error) {
   return immutable.merge(asyncState, {
     status: statusList.FAIL,
-    error: error,
+    error,
     needShowLoader: false,
     needShowError: true,
     needShowData: false,
     hasRequested: true,
   });
-};
-
+}
 
 export class AsyncState {
   status = null;

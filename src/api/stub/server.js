@@ -5,14 +5,15 @@
 
 const connect = require('connect');
 const serveStatic = require('serve-static');
+
 const port = 3000;
 
 connect()
   .use(serveStatic(__dirname, {
-    setHeaders: function (res) {
-      res.setHeader("Access-Control-Allow-Origin", "*");
-    }
+    setHeaders(res) {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+    },
   }))
-  .listen(port, function () {
+  .listen(port, () => {
     console.log(`Server running on ${port}...`);
   });

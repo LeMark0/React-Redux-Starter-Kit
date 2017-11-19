@@ -1,29 +1,29 @@
-import {handleActions} from 'redux-actions';
+import { handleActions } from 'redux-actions';
 import immutable from 'seamless-immutable';
 import actionTypes from 'constants/actionTypes';
-import {AsyncState, prepareStateRequest, prepareStateSuccess, prepareStateFail} from 'objects/AsyncState.js';
+import { AsyncState, prepareStateRequest, prepareStateSuccess, prepareStateFail } from 'objects/AsyncState';
 
 const initialState = immutable.from({
   async: {
-    getLatestRates: new AsyncState()
-  }
+    getLatestRates: new AsyncState(),
+  },
 });
 
 export default handleActions({
-  [actionTypes.currency.async.getLatestRatesRequest]: state => immutable.merge(state, {
+  [actionTypes.currency.async.getLatestRatesRequest]: (state) => immutable.merge(state, {
     async: {
-      getLatestRates: prepareStateRequest(state.async.getLatestRates)
-    }
+      getLatestRates: prepareStateRequest(state.async.getLatestRates),
+    },
   }),
   [actionTypes.currency.async.getLatestRatesSuccess]: (state, action) => immutable.merge(state, {
     async: {
-      getLatestRates: prepareStateSuccess(state.async.getLatestRates, action.payload)
-    }
+      getLatestRates: prepareStateSuccess(state.async.getLatestRates, action.payload),
+    },
   }),
   [actionTypes.currency.async.getLatestRatesFail]: (state, action) => immutable.merge(state, {
     async: {
-      getLatestRates: prepareStateFail(state.async.getLatestRates, action.payload)
-    }
+      getLatestRates: prepareStateFail(state.async.getLatestRates, action.payload),
+    },
   }),
 
 }, initialState);

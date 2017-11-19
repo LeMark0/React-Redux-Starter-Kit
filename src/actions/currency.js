@@ -1,6 +1,6 @@
-import {createAction} from 'redux-actions';
+import { createAction } from 'redux-actions';
 import actionTypes from 'constants/actionTypes';
-import api from 'api/api.js';
+import api from 'api/api';
 
 export const getLatestRatesRequest = createAction(actionTypes.currency.async.getLatestRatesRequest);
 export const getLatestRatesSuccess = createAction(actionTypes.currency.async.getLatestRatesSuccess);
@@ -11,13 +11,11 @@ export const getLatestRates = (params) => (dispatch) => {
   dispatch(getLatestRatesRequest());
 
   api('currency.latest', params)
-    .then(response => {
+    .then((response) => {
       dispatch(getLatestRatesSuccess(JSON.parse(response.responseData)));
-
     })
-    .catch(error => {
+    .catch((error) => {
       dispatch(getLatestRatesFail(error));
-
     });
 };
 
