@@ -2,11 +2,11 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const constants = require('./webpack.constants');
 const pathList = require('./webpack.pathList');
 
-const USE_LINT = constants.USE_LINT;
+const { USE_LINT } = constants;
 
-let eslint = null;
+let esLint = null;
 if (USE_LINT) {
-  eslint = {
+  esLint = {
     test: /\.(js|jsx)$/,
     enforce: 'pre',
     use: [
@@ -28,4 +28,4 @@ if (USE_LINT) {
     ],
   };
 }
-module.exports = eslint;
+module.exports = esLint;

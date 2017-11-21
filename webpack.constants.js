@@ -1,5 +1,5 @@
 const path = require('path');
-const pathList = require("./webpack.pathList");
+const pathList = require('./webpack.pathList');
 
 let buildEnv = 'client_develop';
 const env = process.argv.indexOf('--env');

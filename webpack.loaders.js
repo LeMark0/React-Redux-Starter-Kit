@@ -3,8 +3,8 @@ module.exports = [
     test: /\.(jsx|js)?$/,
     exclude: /node_modules/,
     use: [
-      'babel-loader'
-    ]
+      'babel-loader',
+    ],
   },
   {
     test: /\.(ico|jpg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)$/,
@@ -13,31 +13,31 @@ module.exports = [
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: 'static/[name].[hash:8].[ext]'
-        }
-      }
-    ]
+          name: 'static/[name].[hash:8].[ext]',
+        },
+      },
+    ],
   }, {
     test: /\.json$/,
     use: [
-      'json-loader'
-    ]
+      'json-loader',
+    ],
   },
   {
     test: /\.scss$/,
     use: [
       {
-        loader: "style-loader" // creates style nodes from JS strings
+        loader: 'style-loader', // creates style nodes from JS strings
       },
       {
-        loader: "css-loader", // translates CSS into CommonJS
+        loader: 'css-loader', // translates CSS into CommonJS
         options: {
           url: false,
         },
       },
       {
-        loader: "sass-loader" // compiles Sass to CSS
-      }
-    ]
-  }
+        loader: 'sass-loader', // compiles Sass to CSS
+      },
+    ],
+  },
 ];
