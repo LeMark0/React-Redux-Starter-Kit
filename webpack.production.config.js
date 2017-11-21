@@ -5,28 +5,45 @@ const path = require('path');
 const pathList = require('./pathList');
 const loaders = require('./webpack.loaders');
 const constants = require('./webpack.constants');
-const eslintPlugin = require('./webpack.eslint');
 
 const plugins = [
   new webpack.DefinePlugin({
-    'process.env.NODE_ENV': JSON.stringify(constants.BUILD_ENV),
-  }),
-  new webpack.optimize.CommonsChunkPlugin({
-    name: 'vendor',
-    filename: 'vendor.js',
-    minChunks: Infinity,
+    'process.env.NODE_ENV': JSON.stringify('production'),
   }),
   new HtmlWebpackPlugin({
     template: './static/index.html',
   }),
 ];
 
-if (eslintPlugin) {
-  plugins.push(eslintPlugin);
+if (process.env.NODE_ENV === 'production') {
+  plugins.push(
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false,
+    }),
+  ),
+  plugins.push(
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+        screw_ie8: true,
+        conditionals: true,
+        unused: true,
+        comparisons: true,
+        sequences: true,
+        dead_code: true,
+        evaluate: true,
+        if_return: true,
+        join_vars: true,
+      },
+      output: {
+        comments: false,
+      },
+    })
+  );
 }
 
 module.exports = {
-  plugins,
   entry: {
     app: [
       'babel-polyfill',
@@ -50,23 +67,21 @@ module.exports = {
     ],
   },
   output: {
-    publicPath: '/',
     filename: 'bundle.js',
-    path: path.resolve(__dirname, '/dist'),
-    sourceMapFilename: '[name].js,map',
+    path: path.resolve(__dirname, 'dist')
   },
   resolve: {
     extensions: ['.js', '.jsx'],
     modules: [
       pathList.src,
-      'node_modules',
+      'node_modules'
     ],
     alias: {
       components: path.resolve(__dirname, `${pathList.src}/components/`),
       containers: path.resolve(__dirname, `${pathList.src}/containers/`),
-    },
+    }
   },
-  devtool: process.env.WEBPACK_DEVTOOL || 'cheap-module-source-map',
+  devtool: 'source-map',
   devServer: {
     contentBase: pathList.src,
     hot: true,
@@ -76,4 +91,5 @@ module.exports = {
   module: {
     loaders,
   },
+  plugins: plugins
 };

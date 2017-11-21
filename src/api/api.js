@@ -1,5 +1,5 @@
 import forge from 'mappersmith';
-import get from 'lodash/get';
+import { get } from 'lodash';
 import config from './config';
 
 const apiAlias = (config.useStubs)

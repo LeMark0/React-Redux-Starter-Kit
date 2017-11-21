@@ -1,6 +1,3 @@
-const path = require('path');
-const pathList = require('./webpack.pathList');
-
 let buildEnv = 'client_develop';
 const env = process.argv.indexOf('--env');
 if (env !== -1 && process.argv[env + 1] != null) {
@@ -8,8 +5,6 @@ if (env !== -1 && process.argv[env + 1] != null) {
 }
 
 module.exports = {
-  path,
-  pathList,
   port: 8080,
   BUILD_ENV: buildEnv,
   CLEAN_OUTPUT: process.argv.includes('--env.clean-output'),
