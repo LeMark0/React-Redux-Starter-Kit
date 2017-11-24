@@ -1,0 +1,15 @@
+module.export = [
+  'babel-polyfill',
+  'react',
+  'react-redux',
+  'react-router',
+  'react-dom',
+  'redux',
+  'redux-thunk',
+  'seamless-immutable',
+  'react-router-redux',
+  'history',
+  'lodash',
+  'styled-components',
+  'prop-types',
+];

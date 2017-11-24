@@ -4,6 +4,7 @@ const path = require('path');
 
 const pathList = require('./pathList');
 const loaders = require('./webpack.loaders');
+const vendorList = require('./webpack.vendor');
 const constants = require('./webpack.constants');
 
 const plugins = [
@@ -49,22 +50,7 @@ module.exports = {
       'babel-polyfill',
       `${pathList.src}/index.jsx`,
     ],
-    vendor: [
-      'babel-polyfill',
-      'react',
-      'react-redux',
-      'react-router',
-      'react-dom',
-      'redux',
-      'redux-thunk',
-      'seamless-immutable',
-      'react-router-redux',
-      'history',
-      'lodash',
-      'styled-components',
-      'mappersmith',
-      'prop-types',
-    ],
+    vendor: vendorList,
   },
   output: {
     filename: 'bundle.js',

@@ -12,7 +12,7 @@ export const getLatestRates = (params) => (dispatch) => {
 
   api('currency.latest', params)
     .then((response) => {
-      dispatch(getLatestRatesSuccess(JSON.parse(response.responseData)));
+      dispatch(getLatestRatesSuccess(response.data));
     })
     .catch((error) => {
       dispatch(getLatestRatesFail(error));

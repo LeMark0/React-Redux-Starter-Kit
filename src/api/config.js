@@ -1,4 +1,4 @@
-export default {
+const config = {
   useStubs: true,
   api: {
     stub: {
@@ -15,3 +15,7 @@ export default {
     },
   },
 };
+
+config.defaultHost = config.api.localhost;
+
+export default config;
