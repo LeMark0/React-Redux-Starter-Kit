@@ -1,10 +1,18 @@
-import forge from 'mappersmith';
+import axios from 'axios';
 import get from 'lodash/get';
-import config from './config';
-import resources, { method } from './resources';
+import flow from 'lodash/flow';
+import resourceList from './resources';
+import apiConfig from './config';
 
-// TODO config
-const apiAlias = 'localhost';
+function getResourceHost(resourceConfig) {
+  if (resourceConfig.useStub) {
+    return apiConfig.api.stub.host;
+  }
+
+  return (resourceConfig.host)
+    ? resourceConfig.host
+    : apiConfig.defaultHost.host;
+}
 
 const createStubURI = (uri = '') => `${(
   uri
@@ -12,81 +20,22 @@ const createStubURI = (uri = '') => `${(
     .replace(/\//g, '_')
 )}.json`;
 
-const prepareResources = (list = {}) => {
-  const result = {};
-
-  Object.keys(list).forEach((groupKey) => {
-    const methodList = list[groupKey];
-    result[groupKey] = {};
-
-    Object.keys(methodList).forEach((methodKey) => {
-      const item = methodList[methodKey];
-
-      result[groupKey][methodKey] = {
-        ...item,
-        path: (item.useStub) ? createStubURI(item.path) : item.path,
-        method: (item.useStub) ? 'get' : item.method,
-      };
-    });
-  });
-
-  return result;
-};
-
-const dataMiddleware = ({ resourceName, resourceMethod }) => ({
-  request(request) {
-    console.log('request: ', request);
-    const resourceConfig = resources[resourceName][resourceMethod];
-    if (request.requestParams && resourceConfig && resourceConfig.method === method.post) {
-      let headers = request.headers();
-      if (request.requestParams.postHeaders) {
-        headers = {
-          ...headers,
-          ...request.requestParams.postHeaders,
-        };
-        delete request.requestParams.postHeaders;
-      }
-
-      const content = JSON.stringify(request.requestParams);
-      request.requestParams = {
-        headers,
-        body: content,
-      };
-      return request;
-    }
-    return request;
-  },
-
-  response(next) {
-    return next().then((response) => response);
-  },
-});
-
-const stubMiddleware = () => ({
-  request(request) {
-    return request.enhance({
-      path: createStubURI(request.path()),
-    });
-  },
-});
-
-const client = forge({
-  resources,
-  middlewares: [dataMiddleware],
-  host: config.api[apiAlias].host,
-});
-
-const stubClient = forge({
-  resources: prepareResources(resources),
-  middlewares: [dataMiddleware, stubMiddleware],
-  host: config.api.stub.host,
-});
+function prepareResource(resourceConfig = {}) {
+  return flow(
+    (config) => ({ ...config, host: getResourceHost(config) }),
+    (config) => ({ ...config, url: createStubURI(config.url) }),
+  )(resourceConfig);
+}
 
 export default function (resource, params) {
-  const resourceConfig = get(resources, resource);
+  const resourceConfig = prepareResource(get(resourceList, resource));
+  console.log('resourceConfig: ', resourceConfig);
 
-  return get(
-    (resourceConfig.useStub) ? stubClient : client,
-    resource,
-  )(params);
+  return axios({
+    method: resourceConfig.method,
+    baseURL: getResourceHost(resourceConfig),
+    url: resourceConfig.url,
+    data: params,
+    transformRequest: [resourceConfig.transformRequest],
+  });
 }

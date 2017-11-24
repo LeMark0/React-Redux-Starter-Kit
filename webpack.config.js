@@ -5,6 +5,7 @@ const path = require('path');
 const pathList = require('./pathList');
 const loaders = require('./webpack.loaders');
 const constants = require('./webpack.constants');
+const vendorList = require('./webpack.vendor');
 const eslintPlugin = require('./webpack.eslint');
 
 const plugins = [
@@ -32,22 +33,7 @@ module.exports = {
       'babel-polyfill',
       `${pathList.src}/index.jsx`,
     ],
-    vendor: [
-      'babel-polyfill',
-      'react',
-      'react-redux',
-      'react-router',
-      'react-dom',
-      'redux',
-      'redux-thunk',
-      'seamless-immutable',
-      'react-router-redux',
-      'history',
-      'lodash',
-      'styled-components',
-      'mappersmith',
-      'prop-types',
-    ],
+    vendor: vendorList,
   },
   output: {
     publicPath: '/',
