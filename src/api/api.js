@@ -29,7 +29,6 @@ function prepareResource(resourceConfig = {}) {
 
 export default function (resource, params) {
   const resourceConfig = prepareResource(get(resourceList, resource));
-  console.log('resourceConfig: ', resourceConfig);
 
   return axios({
     method: resourceConfig.method,

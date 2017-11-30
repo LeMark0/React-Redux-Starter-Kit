@@ -1,7 +1,9 @@
 const logger = (store) => (next) => (action) => {
-  console.debug('dispatching', action);
+  console.group(action.type);
+  console.info('dispatching', action);
   const result = next(action);
-  console.debug('next state', store.getState());
+  console.log('next state', store.getState());
+  console.groupEnd(action.type);
 
   return result;
 };
