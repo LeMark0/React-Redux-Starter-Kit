@@ -6,16 +6,13 @@ export const getLatestRatesRequest = createAction(actionTypes.currency.async.get
 export const getLatestRatesSuccess = createAction(actionTypes.currency.async.getLatestRatesSuccess);
 export const getLatestRatesFail = createAction(actionTypes.currency.async.getLatestRatesFail);
 
-
-export const getLatestRates = (params) => (dispatch) => {
+export const getLatestRates = (params) => async (dispatch) => {
   dispatch(getLatestRatesRequest());
 
-  api('currency.latest', params)
-    .then((response) => {
-      dispatch(getLatestRatesSuccess(response.data));
-    })
-    .catch((error) => {
-      dispatch(getLatestRatesFail(error));
-    });
+  try {
+    const response = await api('currency.latest', params);
+    dispatch(getLatestRatesSuccess(response.data));
+  } catch (error) {
+    dispatch(getLatestRatesFail(error));
+  }
 };
-
