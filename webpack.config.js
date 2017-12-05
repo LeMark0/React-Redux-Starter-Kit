@@ -52,7 +52,7 @@ module.exports = {
       containers: path.resolve(__dirname, `${pathList.src}/containers/`),
     },
   },
-  devtool: process.env.WEBPACK_DEVTOOL || 'cheap-module-source-map',
+  devtool: 'cheap-module-source-map',
   devServer: {
     contentBase: pathList.src,
     hot: true,
